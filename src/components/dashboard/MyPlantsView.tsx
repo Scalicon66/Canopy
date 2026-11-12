@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Leaf, Sprout, ArrowUpRight, Search, Plus, Droplets, Sun, MapPin, X } from "lucide-react";
+import { Leaf, Sprout, ArrowUpRight, Search, Plus, Droplets, Sun, MapPin, X, Trash2 } from "lucide-react";
 import { usePlants } from "@/context/PlantContext";
 
 export default function MyPlantsView() {
-  const { plants, addPlant, openCheckModal } = usePlants();
+  const { plants, addPlant, deletePlant, openCheckModal } = usePlants();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "healthy" | "needs_attention">("all");
   const [isAddOpen, setIsAddOpen] = useState(false);
@@ -240,13 +240,29 @@ export default function MyPlantsView() {
                   </p>
                 </div>
 
-                {/* Action */}
-                <button
-                  className="inline-flex items-center justify-center rounded-md h-9 w-9 shrink-0 hover:bg-accent hover:text-accent-foreground transition-colors"
-                  aria-label={`Open ${plant.name}`}
-                >
-                  <ArrowUpRight size={16} aria-hidden="true" />
-                </button>
+                {/* Actions */}
+                <div className="flex items-center gap-1 shrink-0">
+                  <button
+                    onClick={() => {
+                      if (confirm(`Remove "${plant.name}" from your collection?`)) {
+                        deletePlant(plant.id);
+                      }
+                    }}
+                    title={`Delete ${plant.name}`}
+                    aria-label={`Delete ${plant.name}`}
+                    className="inline-flex items-center justify-center rounded-lg h-8 w-8 text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors cursor-pointer"
+                  >
+                    <Trash2 size={15} />
+                  </button>
+                  <button
+                    onClick={openCheckModal}
+                    title="Run health check on this plant"
+                    className="inline-flex items-center justify-center rounded-lg h-8 w-8 text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors cursor-pointer"
+                    aria-label={`Open ${plant.name}`}
+                  >
+                    <ArrowUpRight size={16} aria-hidden="true" />
+                  </button>
+                </div>
               </div>
             );
           })

@@ -16,6 +16,7 @@ interface PlantContextType {
   markAllNotificationsAsRead: () => void;
   dismissNotification: (id: string) => void;
   addPlant: (plant: Omit<Plant, "id">) => void;
+  deletePlant: (id: string) => void;
   addScannedPlant: (plant: Omit<ScannedPlant, "id">) => void;
   deleteScannedPlant: (id: string) => void;
   adoptScannedPlant: (id: string, homeLocation?: string) => void;
@@ -379,6 +380,37 @@ export function PlantProvider({ children }: { children: React.ReactNode }) {
       id: Date.now().toString(),
     };
     setPlants((prev) => [newPlant, ...prev]);
+
+    // Automatically trigger notification for added plant
+    const notif: NotificationItem = {
+      id: `notif-${Date.now()}`,
+      type: "reminder",
+      title: `Welcome ${newPlant.name}!`,
+      description: `${newPlant.name} is now tracked in your care under ${newPlant.location}.`,
+      time: "Just now",
+      read: false,
+      plantName: newPlant.name,
+    };
+    setNotifications((prev) => [notif, ...prev]);
+  };
+
+  const deletePlant = (id: string) => {
+    const target = plants.find((p) => p.id === id);
+    setPlants((prev) => prev.filter((p) => p.id !== id));
+
+    // Automatically trigger notification for deleted plant
+    if (target) {
+      const notif: NotificationItem = {
+        id: `notif-${Date.now()}`,
+        type: "reminder",
+        title: `Plant removed: ${target.name}`,
+        description: `${target.name} has been removed from your personal collection.`,
+        time: "Just now",
+        read: false,
+        plantName: target.name,
+      };
+      setNotifications((prev) => [notif, ...prev]);
+    }
   };
 
   const addScannedPlant = (scannedData: Omit<ScannedPlant, "id">) => {
@@ -445,6 +477,7 @@ export function PlantProvider({ children }: { children: React.ReactNode }) {
         markAllNotificationsAsRead,
         dismissNotification,
         addPlant,
+        deletePlant,
         addScannedPlant,
         deleteScannedPlant,
         adoptScannedPlant,
