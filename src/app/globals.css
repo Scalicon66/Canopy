@@ -1,26 +1,94 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@layer base {
+  :root {
+    --radius: 0.5rem;
+    --background: oklch(97.5% 0.013 112);
+    --foreground: oklch(23% 0.045 151);
+    --card: oklch(99.5% 0.006 112);
+    --card-foreground: oklch(23% 0.045 151);
+    --popover: oklch(99.5% 0.006 112);
+    --popover-foreground: oklch(23% 0.045 151);
+    --primary: oklch(38% 0.075 151);
+    --primary-foreground: oklch(98% 0.01 110);
+    --secondary: oklch(93% 0.025 128);
+    --secondary-foreground: oklch(30% 0.05 148);
+    --muted: oklch(95% 0.018 118);
+    --muted-foreground: oklch(49% 0.035 148);
+    --accent: oklch(91% 0.055 128);
+    --accent-foreground: oklch(30% 0.06 148);
+    --destructive: oklch(58% 0.16 33);
+    --destructive-foreground: oklch(99% 0.005 110);
+    --border: oklch(89% 0.025 125);
+    --input: oklch(89% 0.025 125);
+    --ring: oklch(55% 0.075 150);
+    --chart-1: oklch(49% 0.09 148);
+    --chart-2: oklch(70% 0.1 126);
+    --chart-3: oklch(69% 0.14 53);
+    --chart-4: oklch(68% 0.08 191);
+    --chart-5: oklch(58% 0.13 25);
+
+    /* Sidebar */
+    --sidebar: oklch(27% 0.055 151);
+    --sidebar-foreground: oklch(93% 0.025 119);
+    --sidebar-primary: oklch(80% 0.11 129);
+    --sidebar-primary-foreground: oklch(23% 0.045 151);
+    --sidebar-accent: oklch(34% 0.06 150);
+    --sidebar-accent-foreground: oklch(96% 0.025 119);
+    --sidebar-border: oklch(100% 0 0 / 0.1);
+    --sidebar-ring: oklch(66% 0.09 138);
+
+    /* Custom colors */
+    --soil: oklch(57% 0.12 43);
+    --soil-soft: oklch(94% 0.045 59);
+    --leaf: oklch(87% 0.12 127);
+    --leaf-soft: oklch(92% 0.05 128);
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-soil: var(--soil);
+  --color-soil-soft: var(--soil-soft);
+  --color-leaf: var(--leaf);
+  --color-leaf-soft: var(--leaf-soft);
+  --font-sans: "Figtree", sans-serif;
+  --font-display: "Outfit", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  .text-display {
+    font-family: var(--font-display);
+  }
 }
