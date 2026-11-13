@@ -1,9 +1,9 @@
 "use client";
 
-import { Activity, Sprout, History, Camera, X, Sparkles, ArrowUpRight } from "lucide-react";
+import { Activity, Sprout, History, Camera, Bell, X, Sparkles, ArrowUpRight } from "lucide-react";
 import { usePlants } from "@/context/PlantContext";
 
-export type ViewName = "overview" | "my-plants" | "diagnosis-history" | "scanned-plants";
+export type ViewName = "overview" | "my-plants" | "scanned-plants" | "diagnosis-history" | "notifications";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -13,7 +13,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen, onClose, activeView, onViewChange }: SidebarProps) {
-  const { plants, scannedPlants } = usePlants();
+  const { plants, scannedPlants, unreadNotificationsCount } = usePlants();
 
   const navItems: {
     label: string;
@@ -23,6 +23,12 @@ export default function Sidebar({ isOpen, onClose, activeView, onViewChange }: S
   }[] = [
     { label: "Overview", view: "overview", icon: Activity, badge: null },
     { label: "My plants", view: "my-plants", icon: Sprout, badge: String(plants.length) },
+    {
+      label: "Notifications",
+      view: "notifications",
+      icon: Bell,
+      badge: unreadNotificationsCount > 0 ? String(unreadNotificationsCount) : null,
+    },
     { label: "Diagnosis history", view: "diagnosis-history", icon: History, badge: null },
   ];
   return (

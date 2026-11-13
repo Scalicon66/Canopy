@@ -7,6 +7,7 @@ import OverviewView from "@/components/dashboard/OverviewView";
 import MyPlantsView from "@/components/dashboard/MyPlantsView";
 import ScannedPlantsView from "@/components/dashboard/ScannedPlantsView";
 import DiagnosisHistoryView from "@/components/dashboard/DiagnosisHistoryView";
+import NotificationsView from "@/components/dashboard/NotificationsView";
 import { PlantProvider } from "@/context/PlantContext";
 
 function MainContent() {
@@ -44,6 +45,14 @@ function MainContent() {
         );
       case "diagnosis-history":
         return <DiagnosisHistoryView />;
+      case "notifications":
+        return (
+          <NotificationsView
+            onViewPlant={() => setActiveView("my-plants")}
+            onViewHistory={() => setActiveView("diagnosis-history")}
+            onCheckPlant={handleCheckPlant}
+          />
+        );
       default:
         return (
           <OverviewView
@@ -67,7 +76,11 @@ function MainContent() {
 
       {/* Main Content Area */}
       <main className="flex min-h-screen flex-col bg-background">
-        <Header onMenuClick={() => setSidebarOpen(true)} />
+        <Header
+          onMenuClick={() => setSidebarOpen(true)}
+          onNotificationsClick={() => setActiveView("notifications")}
+          isNotificationsActive={activeView === "notifications"}
+        />
 
         {/* Content container */}
         <div className="mx-auto flex w-full max-w-[1500px] flex-1 flex-col justify-between px-5 pt-6 sm:px-8 lg:px-11 lg:pt-8 pb-3">
